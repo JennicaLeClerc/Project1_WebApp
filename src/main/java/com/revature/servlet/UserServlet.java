@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet("/users/*")
+@WebServlet("/users/")
 public class UserServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -25,6 +25,10 @@ public class UserServlet extends HttpServlet {
         String user_id = req.getParameter("user_id");
         List<Integer> ids = Arrays.asList(Integer.parseInt(user_id));
         if(user_id != null){
+            if(Integer.parseInt(user_id) == 0){
+                userService.readAllUsers(req, resp);
+                return;
+            }
             userService.readUserByID(req, resp, ids);
             return;
         }

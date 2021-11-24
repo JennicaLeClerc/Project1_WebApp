@@ -7,12 +7,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.*;
 
 public class UserService {
-    private User currentUser;
     private final ObjectMapper mapper;
     private final GenericDao genericDao;
 
@@ -21,7 +19,11 @@ public class UserService {
         this.mapper = new ObjectMapper();
     }
 
-    // CREATE
+    /**
+     *
+     * @param req
+     * @param resp
+     */
     public void createUser(HttpServletRequest req, HttpServletResponse resp){
         // get the user object from the body.
         try {
@@ -110,17 +112,19 @@ public class UserService {
 
     // DELETE
     public void deleteUser(HttpServletRequest req, HttpServletResponse resp, List<Integer> ids){
-        genericDao.delete(User.class, ids);
+        int user_id = ids.get(0);
+
         try{
-            boolean deleted = (boolean) genericDao.readByPKey(User.class, ids);
+            boolean deleted = genericDao.delete(User.class, ids);
 
             if(!deleted){
+                resp.getWriter().println("User could not be found with id: " + user_id);
+                resp.setHeader("Content-Type", "application/json");
                 resp.setStatus(418);
-                resp.getWriter().println("User could not be found with id: " + ids.get(0));
                 return;
             }
 
-            resp.getWriter().println("Deleted row with User id: " + ids.get(0));
+            resp.getWriter().println("Deleted row with User id: " + user_id);
             resp.setHeader("Content-Type", "application/json");
             resp.setStatus(200);
         } catch (IOException e) {
