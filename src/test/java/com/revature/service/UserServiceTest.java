@@ -39,8 +39,6 @@ public class UserServiceTest {
         List<User> returnObjects = new ArrayList<>();
         returnObjects.add(testUser);
 
-        Mockito.when(req.getParameter("user_id")).thenReturn("2");
-        Mockito.when(req.getParameter("Primary-Key")).thenReturn("2");
         Mockito.when(genericDao.createRow(testUser)).thenReturn(returnObjects);
 
         StringWriter sw = new StringWriter();
@@ -65,8 +63,6 @@ public class UserServiceTest {
         returnObjects.add(new User().setUser_id(1).setUsername("user1").setPassword("password"));
         returnObjects.add(new User(2, "user2", "password", "John", "Smith"));
 
-        Mockito.when(req.getParameter("Request-Type")).thenReturn("all");
-        Mockito.when(req.getParameter("user_id")).thenReturn("2");
         Mockito.when(genericDao.read(classType)).thenReturn(returnObjects);
 
         StringWriter sw = new StringWriter();

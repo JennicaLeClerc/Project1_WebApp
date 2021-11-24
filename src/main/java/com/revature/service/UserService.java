@@ -20,9 +20,9 @@ public class UserService {
     }
 
     /**
-     *
-     * @param req
-     * @param resp
+     * Creates the User table if it doesn't exist and a row with the given inputs.
+     * @param req - Input from Postman
+     * @param resp - Output to Postman
      */
     public void createUser(HttpServletRequest req, HttpServletResponse resp){
         // get the user object from the body.
@@ -44,7 +44,11 @@ public class UserService {
         }
     }
 
-    // READ
+    /**
+     * Reads out all the Users on the table.
+     * @param req - Input from Postman
+     * @param resp - Output to Postman
+     */
     public void readAllUsers(HttpServletRequest req, HttpServletResponse resp){
         try {
             resp.getWriter().print(mapper.writeValueAsString(genericDao.read(User.class)));
@@ -65,6 +69,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Reads out the User on the table with the given PKeys (ids).
+     * @param req - Input from Postman
+     * @param resp - Output to Postman
+     * @param ids - List of PKey ids for one User object. Just a list of one user_id.
+     */
     public void readUserByID(HttpServletRequest req, HttpServletResponse resp, List<Integer> ids){
         try{
             User user = (User) genericDao.readByPKey(User.class, ids);
@@ -84,7 +94,11 @@ public class UserService {
         }
     }
 
-    // UPDATE
+    /**
+     * Updates all columns of the User table for with the input's PKeys (user_id).
+     * @param req - Input from Postman
+     * @param resp - Output to Postman
+     */
     public void updateUser(HttpServletRequest req, HttpServletResponse resp){
         try {
             User user = mapper.readValue(req.getReader().lines().collect(Collectors.joining()), User.class);
@@ -110,7 +124,12 @@ public class UserService {
         }
     }
 
-    // DELETE
+    /**
+     * Deletes all columns of the User table with the given PKeys (ids).
+     * @param req - Input from Postman
+     * @param resp - Output to Postman
+     * @param ids - List of PKey ids for one User object. Just a list of one user_id.
+     */
     public void deleteUser(HttpServletRequest req, HttpServletResponse resp, List<Integer> ids){
         int user_id = ids.get(0);
 
@@ -133,6 +152,10 @@ public class UserService {
         }
     }
 
+    /**
+     * @param id - User_id.
+     * @return - returns a boolean if the user_id exists.
+     */
     private boolean exists(int id){
         List<Integer> ids = Arrays.asList(id);
         return genericDao.readByPKey(User.class, ids) != null;
