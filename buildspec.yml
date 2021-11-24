@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - mv target/Http_Intro-1.0-SNAPSHOT.war ROOT.war
+      - mv target/Project1_WebApp-1.0-SNAPSHOT.war ROOT.war
 artifacts:
   files:
     - ROOT.war
