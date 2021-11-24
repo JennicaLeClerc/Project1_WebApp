@@ -1,15 +1,13 @@
 package com.revature;
 
 import com.revature.model.User;
-import com.revature.util.*;
+import com.revature.util.SQLStringCreator;
 import com.revature.persistence.*;
 
 import java.util.*;
 
 // Main class
 public class Driver {
-    static GenericDao genericDao = new GenericDao();
-
     // Main driver method
     public static void main(String[] args) {
         User user = new User();
@@ -22,18 +20,18 @@ public class Driver {
         //ListAll.ListAllAnnotatedFields(User.class);
         //ListAll.ListAllAnnotatedMethods(User.class);
 
-        SQLStringCreator.CreateTableString(User.class);
-        SQLStringCreator.CreateRowString(User.class);
-        SQLStringCreator.ReadString(User.class);
-        SQLStringCreator.ReadByPKeyString(User.class);
-        SQLStringCreator.UpdateString(User.class);
-        SQLStringCreator.DeleteString(User.class);
+        System.out.println(SQLStringCreator.CreateTableString(User.class));
+        System.out.println(SQLStringCreator.CreateRowString(User.class));
+        System.out.println(SQLStringCreator.ReadString(User.class));
+        System.out.println(SQLStringCreator.ReadByPKeyString(User.class));
+        System.out.println(SQLStringCreator.UpdateString(User.class));
+        System.out.println(SQLStringCreator.DeleteString(User.class));
 
         //genericDao.createRow(user);
-        List<Integer> list = Arrays.asList(3);
+        //List<Integer> list = Arrays.asList(3);
         //genericDao.delete(user, list);
-        List<User> AllUsers = genericDao.Read(User.class);
-        User user1 = (User) genericDao.ReadByPKey(User.class,list);
+        //List<User> AllUsers = genericDao.Read(User.class);
+        //User user1 = (User) genericDao.ReadByPKey(User.class,list);
         //user1.setAge(15);
         //genericDao.update(user1);
     }
